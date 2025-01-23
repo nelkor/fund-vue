@@ -1,0 +1,22 @@
+@import '@/shared/breakpoints';
+
+.app-header {
+  height: var(--header-height);
+  display: flex;
+  padding: 16px 32px;
+  align-items: center;
+  box-sizing: border-box;
+  justify-content: space-between;
+}
+
+.header-content {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+@media (max-width: $breakpoint-400) {
+  .app-header {
+    padding-right: 16px;
+  }
+}
