@@ -1,6 +1,7 @@
 import { ref, computed } from 'vue'
 
-import { connect, BlockchainConnection } from '@/connection'
+import { connect } from './connect'
+import { BlockchainConnection } from './types'
 
 const connectionInProgress = ref(false)
 const connection = ref<null | BlockchainConnection>(null)
@@ -21,7 +22,6 @@ export const isConnected = computed(() => Boolean(connection.value))
 
 export const isFundOpen = computed(() => Boolean(connection.value?.isOpen))
 
-// Перенести connection в features и сделать useConnectToNetwork
 export const connectToNetwork = () => {
   connectionInProgress.value = true
 

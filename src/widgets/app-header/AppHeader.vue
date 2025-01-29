@@ -6,7 +6,7 @@ import {
   isConnected,
   canBeConnected,
   connectToNetwork,
-} from '@/features/network'
+} from '@/features/connection'
 import { useChangeTheme } from '@/features/theme'
 
 const { changeTheme } = useChangeTheme()

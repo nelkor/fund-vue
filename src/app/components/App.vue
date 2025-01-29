@@ -5,7 +5,7 @@ import { AppHeader } from '@/widgets/app-header'
 import { OpenFundPage } from '@/pages/open-fund'
 import { ClosedFundPage } from '@/pages/closed-fund'
 import { InstructionPage } from '@/pages/instruction'
-import { isFundOpen, isConnected } from '@/features/network'
+import { isFundOpen, isConnected } from '@/features/connection'
 
 import NaiveProvider from './NaiveProvider.vue'
 </script>

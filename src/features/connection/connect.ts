@@ -33,18 +33,12 @@ export const connect = async (): Promise<BlockchainConnection> => {
   const dollarContract = new ethers.Contract(dollarAddress, tokenAbi, signer)
 
   const isOpen = await fundContract.isOpen()
-  const tokenSymbol = await tokenContract.symbol()
-  const dollarSymbol = await dollarContract.symbol()
   const dollarDecimals = Number(await dollarContract.decimals())
-  const price = unscaleAmount(await fundContract.price(), TOKEN_DECIMALS)
 
   const call = createCallFunction(provider)
 
   return {
-    price,
     isOpen,
-    tokenSymbol,
-    dollarSymbol,
     approveDollar(amount: string) {
       const scaledAmount = ethers.parseUnits(amount, dollarDecimals)
 
