@@ -7,6 +7,7 @@ import {
   NText,
   NSpin,
   NAlert,
+  NInputGroup,
   NSpace,
   NButton,
   useMessage,
@@ -121,22 +122,25 @@ fetchBalance()
       <NSpace vertical size="large">
         <NP v-if="Number.isFinite(dollarBalance)">
           Your balance is <NText strong>{{ dollarBalance }}</NText> USDT.
-
-          <NButton type="primary" text @click="selectAllDollars">
-            Select all
-          </NButton>
         </NP>
 
-        <NInputNumber
-          v-model:value="dollarInputAmount"
-          :min="0"
-          clearable
-          size="large"
-          :disabled="transactionInProgress"
-          :max="dollarBalance || 0"
-          placeholder="Enter USDT amount"
-          :input-props="{ name: 'usdt-amount' }"
-        />
+        <NInputGroup class="amount-input-group">
+          <NInputNumber
+            v-model:value="dollarInputAmount"
+            class="amount-input"
+            :min="0"
+            clearable
+            size="large"
+            :disabled="transactionInProgress"
+            :max="dollarBalance || 0"
+            placeholder="Enter USDT amount"
+            :show-button="false"
+            :input-props="{ name: 'usdt-amount' }"
+          />
+          <NButton size="large" ghost @click="selectAllDollars">
+            Select all
+          </NButton>
+        </NInputGroup>
 
         <FormSubmit
           :disabled="(dollarInputAmount || 0) <= 0 || transactionInProgress"
@@ -159,22 +163,26 @@ fetchBalance()
       <NSpace vertical size="large">
         <NP v-if="Number.isFinite(tokenBalance)">
           Your balance is <NText strong>{{ tokenBalance }}</NText> HAVE.
-
-          <NButton type="primary" text @click="selectAllTokens">
-            Select all
-          </NButton>
         </NP>
 
-        <NInputNumber
-          v-model:value="tokenInputAmount"
-          :min="0"
-          clearable
-          size="large"
-          :disabled="transactionInProgress"
-          :max="tokenBalance || 0"
-          placeholder="Enter HAVE amount"
-          :input-props="{ name: 'have-amount' }"
-        />
+        <NInputGroup class="amount-input-group">
+          <NInputNumber
+            v-model:value="tokenInputAmount"
+            class="amount-input"
+            :min="0"
+            clearable
+            size="large"
+            :disabled="transactionInProgress"
+            :max="tokenBalance || 0"
+            placeholder="Enter HAVE amount"
+            :show-button="false"
+            :input-props="{ name: 'have-amount' }"
+          />
+
+          <NButton size="large" ghost @click="selectAllTokens">
+            Select all
+          </NButton>
+        </NInputGroup>
 
         <FormSubmit
           :disabled="(tokenInputAmount || 0) <= 0 || transactionInProgress"
@@ -185,3 +193,14 @@ fetchBalance()
     </form>
   </NSpin>
 </template>
+
+<style scoped>
+.amount-input-group {
+  display: flex;
+  width: 100%;
+}
+
+.amount-input {
+  flex: 1;
+}
+</style>
