@@ -14,13 +14,13 @@ import { MyTelegram } from '@/features/templates'
 
   <NP>
     During the open period, the Fund freely exchanges
-    its&nbsp;own&nbsp;tokens&nbsp;HAVE for&nbsp;stablecoins
+    its&nbsp;own&nbsp;tokens&nbsp;HAVE for&nbsp;USD₮
     at&nbsp;a&nbsp;fixed&nbsp;price.
   </NP>
 
   <NP>
-    During the closed period, stablecoins multiply in DeFi,
-    and&nbsp;the&nbsp;number of&nbsp;HAVE&nbsp;tokens does&nbsp;not&nbsp;change.
+    During the closed period, USD₮ multiply in DeFi, and&nbsp;the&nbsp;number
+    of&nbsp;HAVE&nbsp;tokens does&nbsp;not&nbsp;change.
     So&nbsp;in&nbsp;the&nbsp;next&nbsp;open&nbsp;period,
     the&nbsp;HAVE&nbsp;tokens are&nbsp;more&nbsp;expensive.
   </NP>

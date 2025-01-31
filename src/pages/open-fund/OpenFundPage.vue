@@ -7,10 +7,10 @@ import {
   NText,
   NSpin,
   NAlert,
-  NInputGroup,
   NSpace,
   NButton,
   useMessage,
+  NInputGroup,
   NInputNumber,
 } from 'naive-ui'
 import { ref } from 'vue'
@@ -115,28 +115,29 @@ fetchBalance()
 <template>
   <NSpin size="large" :show="transactionInProgress" :delay="600">
     <NH1>Open period</NH1>
-    <NH3><NText strong type="primary">1 HAVE = 1 USDT</NText></NH3>
+    <NH3><NText strong type="primary">1 HAVE = 1 USD₮</NText></NH3>
     <NH2>Buy HAVE</NH2>
 
     <form @submit.prevent="onBuySubmit">
       <NSpace vertical size="large">
         <NP v-if="Number.isFinite(dollarBalance)">
-          Your balance is <NText strong>{{ dollarBalance }}</NText> USDT.
+          Your balance is <NText strong>{{ dollarBalance }}</NText> USD₮.
         </NP>
 
         <NInputGroup class="amount-input-group">
           <NInputNumber
             v-model:value="dollarInputAmount"
-            class="amount-input"
             :min="0"
             clearable
             size="large"
-            :disabled="transactionInProgress"
-            :max="dollarBalance || 0"
-            placeholder="Enter USDT amount"
+            class="amount-input"
             :show-button="false"
+            :max="dollarBalance || 0"
+            placeholder="Enter USD₮ amount"
+            :disabled="transactionInProgress"
             :input-props="{ name: 'usdt-amount' }"
           />
+
           <NButton size="large" ghost @click="selectAllDollars">
             Select all
           </NButton>
@@ -168,14 +169,14 @@ fetchBalance()
         <NInputGroup class="amount-input-group">
           <NInputNumber
             v-model:value="tokenInputAmount"
-            class="amount-input"
             :min="0"
             clearable
             size="large"
-            :disabled="transactionInProgress"
+            class="amount-input"
+            :show-button="false"
             :max="tokenBalance || 0"
             placeholder="Enter HAVE amount"
-            :show-button="false"
+            :disabled="transactionInProgress"
             :input-props="{ name: 'have-amount' }"
           />
 

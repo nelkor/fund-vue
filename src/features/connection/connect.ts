@@ -5,9 +5,12 @@ import { tokenAbi } from './token-abi'
 import { BlockchainConnection } from './types'
 import { unscaleAmount, createCallFunction } from './utils'
 
-const NETWORK_ID = 43113n
+const NETWORK_ID = 43114n
 const TOKEN_DECIMALS = 18
-const FUND_ADDRESS = '0xCFF3d28996d878e121fB56ad7D9B247Ff5F49460'
+const DOLLAR_DECIMALS = 6
+const FUND_ADDRESS = 'Will be set'
+const TOKEN_ADDRESS = 'Will be set'
+const DOLLAR_ADDRESS = '0x9702230a8ea53601f5cd2dc00fdbc13d4df4a8c7'
 
 export const connect = async (): Promise<BlockchainConnection> => {
   if (!('ethereum' in window)) {
@@ -25,27 +28,22 @@ export const connect = async (): Promise<BlockchainConnection> => {
   const signer = await provider.getSigner()
 
   const fundContract = new ethers.Contract(FUND_ADDRESS, fundAbi, signer)
-
-  const dollarAddress = await fundContract.dollar()
-  const tokenAddress = await fundContract.fundToken()
-
-  const tokenContract = new ethers.Contract(tokenAddress, tokenAbi, signer)
-  const dollarContract = new ethers.Contract(dollarAddress, tokenAbi, signer)
+  const tokenContract = new ethers.Contract(TOKEN_ADDRESS, tokenAbi, signer)
+  const dollarContract = new ethers.Contract(DOLLAR_ADDRESS, tokenAbi, signer)
 
   const isOpen = await fundContract.isOpen()
-  const dollarDecimals = Number(await dollarContract.decimals())
 
   const call = createCallFunction(provider)
 
   return {
     isOpen,
     approveDollar(amount: string) {
-      const scaledAmount = ethers.parseUnits(amount, dollarDecimals)
+      const scaledAmount = ethers.parseUnits(amount, DOLLAR_DECIMALS)
 
       return call(() => dollarContract.approve(FUND_ADDRESS, scaledAmount))
     },
     buy(amount: string) {
-      const scaledAmount = ethers.parseUnits(amount, dollarDecimals)
+      const scaledAmount = ethers.parseUnits(amount, DOLLAR_DECIMALS)
 
       return call(() => fundContract.buy(scaledAmount))
     },
@@ -57,7 +55,7 @@ export const connect = async (): Promise<BlockchainConnection> => {
     async getDollarBalance() {
       return unscaleAmount(
         await dollarContract.balanceOf(signer.address),
-        dollarDecimals,
+        DOLLAR_DECIMALS,
       )
     },
     async getTokenBalance() {
