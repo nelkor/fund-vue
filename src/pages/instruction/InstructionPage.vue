@@ -35,7 +35,7 @@ import { MyTelegram } from '@/features/templates'
     or directly in
 
     <NA
-      href="https://testnet.snowtrace.io/address/0xCFF3d28996d878e121fB56ad7D9B247Ff5F49460/contract/43113/code"
+      href="https://snowtrace.io/address/0xe83EBE2b62f2FA384Ee842EE7147A8Cb9CBB2F53/contract/43114/code"
       target="_blank"
     >
       blockchain&nbsp;explorer</NA
