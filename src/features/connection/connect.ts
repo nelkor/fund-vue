@@ -8,8 +8,8 @@ import { unscaleAmount, createCallFunction } from './utils'
 const NETWORK_ID = 43114n
 const TOKEN_DECIMALS = 18
 const DOLLAR_DECIMALS = 6
-const FUND_ADDRESS = 'Will be set'
-const TOKEN_ADDRESS = 'Will be set'
+const FUND_ADDRESS = '0xe83EBE2b62f2FA384Ee842EE7147A8Cb9CBB2F53'
+const TOKEN_ADDRESS = '0x0a661766a21D8D0fF11f200158abE0C9DfB8172f'
 const DOLLAR_ADDRESS = '0x9702230a8ea53601f5cd2dc00fdbc13d4df4a8c7'
 
 export const connect = async (): Promise<BlockchainConnection> => {

@@ -17,8 +17,8 @@ connection.getTokenBalance().then(balance => {
   <NH1>Closed period</NH1>
 
   <NP>
-    1000 HAVE tokens were issued. The price in the last open&nbsp;period was
-    $1&nbsp;per&nbsp;1&nbsp;HAVE. $1,000 was raised over
+    15000 HAVE tokens were issued. The price in the last open&nbsp;period was
+    $1&nbsp;per&nbsp;1&nbsp;HAVE. $15,000 was raised over
     the&nbsp;last&nbsp;period. The&nbsp;funds&nbsp;raised
     are&nbsp;now&nbsp;in&nbsp;circulation.
   </NP>
@@ -34,10 +34,5 @@ connection.getTokenBalance().then(balance => {
   </NP>
 
   <MyTelegram />
-
-  <NAlert
-    v-if="amount"
-    :title="`You own ${amount} fund tokens`"
-    type="success"
-  />
+  <NAlert v-if="amount" :title="`You own ${amount} HAVE`" type="success" />
 </template>
