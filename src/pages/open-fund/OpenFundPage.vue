@@ -18,6 +18,8 @@ import { ref } from 'vue'
 import { FormSubmit } from '@/shared'
 import { getConnection } from '@/features/connection'
 
+import { saveApproval, clearApproval, checkApproval } from './save-approval'
+
 const message = useMessage()
 const connection = getConnection()
 const transactionInProgress = ref(false)
@@ -49,11 +51,23 @@ const fetchBalance = () =>
 const onBuySubmit = () => {
   transactionInProgress.value = true
 
-  connection
-    .approveDollar(getStringOfDollarsInput())
+  const stringOfDollars = getStringOfDollarsInput()
+  const alreadyApproved = checkApproval(stringOfDollars)
+
+  // Если уже есть approve, не запрашиваем его повторно.
+  const approvalPromise = alreadyApproved
+    ? Promise.resolve(true)
+    : connection.approveDollar(stringOfDollars)
+
+  approvalPromise
     .then(success => {
       if (success) {
-        return connection.buy(getStringOfDollarsInput())
+        // Если approve не было изначально, сохраняем новый.
+        if (!alreadyApproved) {
+          saveApproval(stringOfDollars)
+        }
+
+        return connection.buy(stringOfDollars)
       }
 
       message.error('Attempt to approve dollars failed')
@@ -61,6 +75,11 @@ const onBuySubmit = () => {
       throw new Error('Attempt to approve dollars failed')
     })
     .then(success => {
+      // Независимо от успеха покупки, стираем approve, если он был.
+      if (alreadyApproved) {
+        clearApproval()
+      }
+
       if (success) {
         fetchBalance()
 
@@ -115,7 +134,7 @@ fetchBalance()
 <template>
   <NSpin size="large" :show="transactionInProgress" :delay="600">
     <NH1>Open period</NH1>
-    <NH3><NText strong type="primary">1 HAVE = 1 USD₮</NText></NH3>
+    <NH3><NText strong type="primary">1 HAVE = 1.2 USD₮</NText></NH3>
     <NH2>Buy HAVE</NH2>
 
     <form @submit.prevent="onBuySubmit">
