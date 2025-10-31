@@ -52,6 +52,12 @@ export const connect = async (): Promise<BlockchainConnection> => {
 
       return call(() => fundContract.sell(scaledAmount))
     },
+    async getAllowance() {
+      return unscaleAmount(
+        await dollarContract.allowance(signer.address, FUND_ADDRESS),
+        DOLLAR_DECIMALS,
+      )
+    },
     async getDollarBalance() {
       return unscaleAmount(
         await dollarContract.balanceOf(signer.address),

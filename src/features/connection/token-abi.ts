@@ -10,6 +10,16 @@ export const tokenAbi = [
     type: 'function',
   },
   {
+    inputs: [
+      { internalType: 'address', name: 'owner', type: 'address' },
+      { internalType: 'address', name: 'spender', type: 'address' },
+    ],
+    name: 'allowance', // Узнать уже разрешённую сумму (лимит) для spender
+    outputs: [{ internalType: 'uint256', name: '', type: 'uint256' }],
+    stateMutability: 'view',
+    type: 'function',
+  },
+  {
     inputs: [{ internalType: 'address', name: 'account', type: 'address' }],
     name: 'balanceOf', // УЗнать свой баланс
     outputs: [{ internalType: 'uint256', name: '', type: 'uint256' }],
