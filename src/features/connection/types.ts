@@ -4,6 +4,7 @@ export type TransactionFn = () => Promise<TransactionResponse>
 
 export interface BlockchainConnection {
   isOpen: boolean
+  getAllowance: () => Promise<string>
   getTokenBalance: () => Promise<string>
   getDollarBalance: () => Promise<string>
   buy: (amount: string) => Promise<boolean>

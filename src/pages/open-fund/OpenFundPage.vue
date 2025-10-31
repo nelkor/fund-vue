@@ -18,8 +18,6 @@ import { ref } from 'vue'
 import { FormSubmit } from '@/shared'
 import { getConnection } from '@/features/connection'
 
-import { saveApproval, clearApproval, checkApproval } from './save-approval'
-
 const message = useMessage()
 const connection = getConnection()
 const transactionInProgress = ref(false)
@@ -52,21 +50,16 @@ const onBuySubmit = () => {
   transactionInProgress.value = true
 
   const stringOfDollars = getStringOfDollarsInput()
-  const alreadyApproved = checkApproval(stringOfDollars)
 
-  // Если уже есть approve, не запрашиваем его повторно.
-  const approvalPromise = alreadyApproved
-    ? Promise.resolve(true)
-    : connection.approveDollar(stringOfDollars)
-
-  approvalPromise
+  connection
+    .getAllowance()
+    .then(allowance =>
+      parseFloat(allowance) >= parseFloat(stringOfDollars)
+        ? Promise.resolve(true)
+        : connection.approveDollar(stringOfDollars),
+    )
     .then(success => {
       if (success) {
-        // Если approve не было изначально, сохраняем новый.
-        if (!alreadyApproved) {
-          saveApproval(stringOfDollars)
-        }
-
         return connection.buy(stringOfDollars)
       }
 
@@ -75,11 +68,6 @@ const onBuySubmit = () => {
       throw new Error('Attempt to approve dollars failed')
     })
     .then(success => {
-      // Независимо от успеха покупки, стираем approve, если он был.
-      if (alreadyApproved) {
-        clearApproval()
-      }
-
       if (success) {
         fetchBalance()
 
